@@ -91,7 +91,19 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
-
+      - name: 修改代码配置 (Hardcode Config)
+        shell: bash
+        run: |
+          # 1. 替换 ID/中继服务器 (IP)
+          sed -i 's/rs-ny.rustdesk.com/47.112.209.131/g' libs/hbb_common/src/config.rs
+          
+          # 2. 替换帮助文档链接 (使用 | 作为分隔符，避免转义 /)
+          sed -i 's|https://rustdesk.com/docs/en/|https://www.charge2bicycle.top|g' libs/hbb_common/src/config.rs
+          sed -i 's|https://rustdesk.com/docs/en/manual/linux/#x11-required|https://www.charge2bicycle.top|g' libs/hbb_common/src/config.rs
+          sed -i 's|https://github.com/rustdesk/rustdesk/wiki/Headless-Linux-Support|https://www.charge2bicycle.top|g' libs/hbb_common/src/config.rs
+          
+          # 3. 替换公钥 Key (注意：如果你的新 Key 包含 / 字符，这里会报错，但看你发的 Key 没有 /，所以没问题)
+          sed -i 's/OeVuKk5nlHiXp+APNn0Y3pC1Iwpwn44JGqrQCsWqmBw=/KnItxKyteY40sBQhYufg6r0U0x257EhpdPsea6YmTDg=/g' libs/hbb_common/src/config.rs
       - name: Restore bridge files
         uses: actions/download-artifact@master
         with:
