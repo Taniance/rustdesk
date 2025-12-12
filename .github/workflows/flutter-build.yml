@@ -10,7 +10,7 @@ on:
       upload-tag:
         type: string
         default: "nightly"
-
+        
 env:
   # 核心版本变量
   SCITER_RUST_VERSION: "1.75"
